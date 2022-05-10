@@ -4,7 +4,7 @@ import os
 import stat
 import sys
 from os import path
-from typing import Any, List
+from typing import Any, List, Dict
 
 import mmd_scripting.core.nuthouse01_core as core
 
@@ -344,11 +344,14 @@ def read_txtfile_to_list(src_path:str, use_jis_encoding=False, quiet=False) -> L
 	:return: list of lines, each line is a string
 	"""
 	src_path = path.abspath(path.normpath(src_path))
+
 	# unless disabled, print the absolute path to the file being read
 	if not quiet: core.MY_PRINT_FUNC(src_path)
+
 	# assert that the given path exists and is a file, not a folder
 	if not path.isfile(src_path):
-		raise RuntimeError("ERROR: attempt to read text file '%s', but it does not exist! (or exists but is not a file)" % src_path)
+		raise FileNotFoundError("ERROR: attempt to read text file '%s', but it does not exist! (or exists but is not a file)" % src_path)
+
 	# default encoding is utf-8, but use shift_jis if use_jis_encoding is given
 	enc = "shift_jis" if use_jis_encoding else "utf-8"
 	try:
