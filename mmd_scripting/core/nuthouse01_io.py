@@ -377,3 +377,42 @@ def check_and_fix_readonly(filepath: str) -> None:
 		ALL_WRITE_PERMISSION = stat.S_IWUSR | stat.S_IWGRP | stat.S_IWOTH
 		os.chmod(filepath, current_permissions | ALL_WRITE_PERMISSION)
 	return
+
+def read_jsonfile_to_dict(src_path:str, use_jis_encoding=False, quiet=False) -> Dict[str, Any]:
+	"""
+	READ a JSON file from disk into memory.
+	:param src_path: source file path, as a string, relative from CWD or absolute
+	:param use_jis_encoding: by default, assume utf-8 encoding. if this=True, use shift_jis instead.
+	:param quiet: by default, print the absolute path being written to. if this=True, don't do this.
+	:return: a dictionary object
+	"""
+	src_path = path.abspath(path.normpath(src_path))
+
+	# unless disabled, print the absolute path to the file being read
+	if not quiet: core.MY_PRINT_FUNC(src_path)
+
+	# assert that the given path exists and is a file, not a folder
+	if not path.isfile(src_path):
+		raise FileNotFoundError(f"ERROR: attempt to read json file '{src_path}', but it does not exist! (or exists but is not a file)")
+
+	# default encoding is utf-8, but use shift_jis if use_jis_encoding is given
+	enc = "shift_jis" if use_jis_encoding else "utf-8"
+	try:
+		with open(src_path, "rt", encoding=enc, errors="strict") as my_file:  # r=read, t=text
+			rb_unicode = my_file.read()
+	except UnicodeDecodeError as e:
+		core.MY_PRINT_FUNC(e.__class__.__name__, e)
+		core.MY_PRINT_FUNC(f"ERROR: attempt to read json file '{(src_path, enc)}', but encoding '{(src_path, enc)}' could not handle contents!")
+		raise
+	except IOError as e:
+		core.MY_PRINT_FUNC(e.__class__.__name__, e)
+		core.MY_PRINT_FUNC(f"ERROR: error wile reading json file '{src_path}', maybe you typed it wrong?")
+		raise
+
+	# break rb_unicode into a list object at standard line endings and return
+	try:
+		return json.loads(rb_unicode)
+	except json.JSONDecodeError as e:
+		core.MY_PRINT_FUNC(e.__class__.__name__, e)
+		core.MY_PRINT_FUNC(f"ERROR: attempt to read json file '{src_path}', but it is not a valid json file!")
+		raise
