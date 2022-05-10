@@ -1,0 +1,16 @@
+{
+    "folder_names": {
+        "folder_textures": "tex",
+        "folder_SPH": "sph",
+        "folder_toon": "toon",
+        "folder_multi": "multi",
+        "folder_unused": "unused"
+    },
+    "file_sorting": {
+        "ignored_folders": {
+            "textures": ["cloth", "outfit", "uniform", "wear", "body", "tex", "weapon", "acc", "face", "tx"],
+            "toon": ["tn", "toon"],
+            "sph": ["sph", "spa", "sp"]
+        }
+    }
+}
