@@ -12,6 +12,7 @@ _SCRIPT_VERSION = "Script version:  Nuthouse01 - v0.6.00 - 6/10/2021"
 # This code is free to use and re-distribute, but I cannot be held responsible for damages that it may or may not cause.
 #####################
 
+CONFIG_DATA = nuthouse01_io.read_jsonfile_to_dict("config.json", quiet=True)
 
 
 # fun fact: SPH and SPA files are just BMP files with the wrong file extension
@@ -29,12 +30,11 @@ BACKUP_SUFFIX = "beforesort"
 
 # these are the names of the folders that the files will be sorted into, these can be changed to whatever you want
 # they cannot use the same names as each other, however, all must be unique
-configData = nuthouse01_io.read_jsonfile_to_dict("config.json", quiet=True)
-FOLDER_TEX = configData["folder_names"]["folder_textures"]
-FOLDER_SPH = configData["folder_names"]["folder_SPH"]
-FOLDER_TOON = configData["folder_names"]["folder_toon"]
-FOLDER_MULTI = configData["folder_names"]["folder_multi"]
-FOLDER_UNUSED = configData["folder_names"]["folder_unused"]
+FOLDER_TEX = CONFIG_DATA["folder_names"]["folder_textures"]
+FOLDER_SPH = CONFIG_DATA["folder_names"]["folder_SPH"]
+FOLDER_TOON = CONFIG_DATA["folder_names"]["folder_toon"]
+FOLDER_MULTI = CONFIG_DATA["folder_names"]["folder_multi"]
+FOLDER_UNUSED = CONFIG_DATA["folder_names"]["folder_unused"]
 
 # how PIL reads things:
 # PNG, JPEG, BMP, DDS, TIFF, GIF
@@ -53,9 +53,9 @@ IMG_TYPE_TO_EXT = {
 # IMG_EXT = (".jpg", ".jpeg", ".png", ".bmp", ".spa", ".sph", ".gif", ".tga", ".dds", ".tif", ".tiff")
 IMG_EXT = tuple([item for sublist in IMG_TYPE_TO_EXT.values() for item in sublist])
 
-KEEP_FOLDERS_TEX = ("cloth", "outfit", "uniform", "wear", "body", "tex", "weapon", "acc", "face", "tx")
-KEEP_FOLDERS_TOON = ("tn", "toon")
-KEEP_FOLDERS_SPH = ("sph", "spa", "sp")
+KEEP_FOLDERS_TEX = CONFIG_DATA["file_sorting"]["ignored_folders"]["textures"]
+KEEP_FOLDERS_TOON = CONFIG_DATA["file_sorting"]["ignored_folders"]["toon"]
+KEEP_FOLDERS_SPH = CONFIG_DATA["file_sorting"]["ignored_folders"]["sph"]
 # all files I expect to find alongside a PMX and don't want to touch/move
 IGNORE_FILETYPES = (".pmx", ".x", ".txt", ".vmd", ".vpd", ".csv")
 # all folders I expect to find alongside a PMX and don't want to touch/move any of their contents
