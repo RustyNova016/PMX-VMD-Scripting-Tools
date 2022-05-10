@@ -6,6 +6,7 @@ from typing import List, Dict
 import mmd_scripting.core.nuthouse01_core as core
 import mmd_scripting.core.nuthouse01_pmx_parser as pmxlib
 import mmd_scripting.core.nuthouse01_pmx_struct as pmxstruct
+import mmd_scripting.core.nuthouse01_io as nuthouse01_io
 
 _SCRIPT_VERSION = "Script version:  Nuthouse01 - v0.6.00 - 6/10/2021"
 # This code is free to use and re-distribute, but I cannot be held responsible for damages that it may or may not cause.
@@ -15,24 +16,25 @@ _SCRIPT_VERSION = "Script version:  Nuthouse01 - v0.6.00 - 6/10/2021"
 
 # fun fact: SPH and SPA files are just BMP files with the wrong file extension
 # if this is true, all SPH/SPA files will be converted to BMP
-# this is so its easier to read/see the sphere map files
+# To make it easier to read/see the sphere map files
 # this is recommended true
 CONVERT_SPA_SPH_TO_BMP = True
 
 
 # this is recommended true, for obvious reasons
 MAKE_BACKUP_BEFORE_RENAMES = True
-# note: zipper automatically appends .zip onto whatever output name i give it, so dont give it a .zip suffix here
+# note: zipper automatically appends .zip onto whatever output name i give it, so don't give it a .zip suffix here
 BACKUP_SUFFIX = "beforesort"
 
 
 # these are the names of the folders that the files will be sorted into, these can be changed to whatever you want
-# they cannot use the same names as eachother, however, all must be unique
-FOLDER_TEX =    "tex"
-FOLDER_SPH =    "sph"
-FOLDER_TOON =   "toon"
-FOLDER_MULTI =  "multi"
-FOLDER_UNUSED = "unused"
+# they cannot use the same names as each other, however, all must be unique
+configData = nuthouse01_io.read_jsonfile_to_dict("config.json", quiet=True)
+FOLDER_TEX = configData["folder_names"]["folder_textures"]
+FOLDER_SPH = configData["folder_names"]["folder_SPH"]
+FOLDER_TOON = configData["folder_names"]["folder_toon"]
+FOLDER_MULTI = configData["folder_names"]["folder_multi"]
+FOLDER_UNUSED = configData["folder_names"]["folder_unused"]
 
 # how PIL reads things:
 # PNG, JPEG, BMP, DDS, TIFF, GIF
