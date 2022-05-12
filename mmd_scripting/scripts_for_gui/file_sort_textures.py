@@ -6,33 +6,35 @@ from typing import List, Dict
 import mmd_scripting.core.nuthouse01_core as core
 import mmd_scripting.core.nuthouse01_pmx_parser as pmxlib
 import mmd_scripting.core.nuthouse01_pmx_struct as pmxstruct
+import mmd_scripting.core.nuthouse01_io as nuthouse01_io
 
 _SCRIPT_VERSION = "Script version:  Nuthouse01 - v0.6.00 - 6/10/2021"
 # This code is free to use and re-distribute, but I cannot be held responsible for damages that it may or may not cause.
 #####################
 
+CONFIG_DATA = nuthouse01_io.read_jsonfile_to_dict("config.json", quiet=True)
 
 
 # fun fact: SPH and SPA files are just BMP files with the wrong file extension
 # if this is true, all SPH/SPA files will be converted to BMP
-# this is so its easier to read/see the sphere map files
+# To make it easier to read/see the sphere map files
 # this is recommended true
 CONVERT_SPA_SPH_TO_BMP = True
 
 
 # this is recommended true, for obvious reasons
 MAKE_BACKUP_BEFORE_RENAMES = True
-# note: zipper automatically appends .zip onto whatever output name i give it, so dont give it a .zip suffix here
+# note: zipper automatically appends .zip onto whatever output name i give it, so don't give it a .zip suffix here
 BACKUP_SUFFIX = "beforesort"
 
 
 # these are the names of the folders that the files will be sorted into, these can be changed to whatever you want
-# they cannot use the same names as eachother, however, all must be unique
-FOLDER_TEX =    "tex"
-FOLDER_SPH =    "sph"
-FOLDER_TOON =   "toon"
-FOLDER_MULTI =  "multi"
-FOLDER_UNUSED = "unused"
+# they cannot use the same names as each other, however, all must be unique
+FOLDER_TEX = CONFIG_DATA["folder_names"]["folder_textures"]
+FOLDER_SPH = CONFIG_DATA["folder_names"]["folder_SPH"]
+FOLDER_TOON = CONFIG_DATA["folder_names"]["folder_toon"]
+FOLDER_MULTI = CONFIG_DATA["folder_names"]["folder_multi"]
+FOLDER_UNUSED = CONFIG_DATA["folder_names"]["folder_unused"]
 
 # how PIL reads things:
 # PNG, JPEG, BMP, DDS, TIFF, GIF
@@ -51,9 +53,9 @@ IMG_TYPE_TO_EXT = {
 # IMG_EXT = (".jpg", ".jpeg", ".png", ".bmp", ".spa", ".sph", ".gif", ".tga", ".dds", ".tif", ".tiff")
 IMG_EXT = tuple([item for sublist in IMG_TYPE_TO_EXT.values() for item in sublist])
 
-KEEP_FOLDERS_TEX = ("cloth", "outfit", "uniform", "wear", "body", "tex", "weapon", "acc", "face", "tx")
-KEEP_FOLDERS_TOON = ("tn", "toon")
-KEEP_FOLDERS_SPH = ("sph", "spa", "sp")
+KEEP_FOLDERS_TEX = CONFIG_DATA["file_sorting"]["ignored_folders"]["textures"]
+KEEP_FOLDERS_TOON = CONFIG_DATA["file_sorting"]["ignored_folders"]["toon"]
+KEEP_FOLDERS_SPH = CONFIG_DATA["file_sorting"]["ignored_folders"]["sph"]
 # all files I expect to find alongside a PMX and don't want to touch/move
 IGNORE_FILETYPES = (".pmx", ".x", ".txt", ".vmd", ".vpd", ".csv")
 # all folders I expect to find alongside a PMX and don't want to touch/move any of their contents

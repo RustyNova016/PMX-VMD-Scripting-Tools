@@ -1,0 +1,16 @@
+{
+    "folder_names": {
+        "folder_textures": "Textures",
+        "folder_SPH": "SPH",
+        "folder_toon": "Toons",
+        "folder_multi": "Multi",
+        "folder_unused": "Unused"
+    },
+    "file_sorting": {
+        "ignored_folders": {
+            "textures": [],
+            "toon": [],
+            "sph": []
+        }
+    }
+}
