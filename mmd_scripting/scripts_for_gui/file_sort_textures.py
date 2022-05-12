@@ -7,6 +7,8 @@ import mmd_scripting.core.nuthouse01_core as core
 import mmd_scripting.core.nuthouse01_pmx_parser as pmxlib
 import mmd_scripting.core.nuthouse01_pmx_struct as pmxstruct
 import mmd_scripting.core.nuthouse01_io as nuthouse01_io
+from mmd_scripting.core.classes.FileRecord import FileRecord
+from mmd_scripting.core.tools.file_system.walk_filetree_from_root import walk_filetree_from_root
 
 _SCRIPT_VERSION = "Script version:  Nuthouse01 - v0.6.00 - 6/10/2021"
 # This code is free to use and re-distribute, but I cannot be held responsible for damages that it may or may not cause.
@@ -63,40 +65,6 @@ IGNORE_FOLDERS = ("fx", "effect", "readme")
 
 remove_pattern = r" ?\(Instance\)_?(\([-0-9]*\))?"
 remove_re = re.compile(remove_pattern)
-
-
-# a struct to bundle all the relevant info about a file that is on disk or used by PMX
-class FileRecord:
-	def __init__(self, name, exists):
-		# the "current name" name this file uses in the PMX: relative to startpath and separator-normalized 
-		# (because these are made after normalize_texture_paths() is called).
-		# or, if it does not exist on disk, whatever name shows up in the PMX entry
-		self.name = name
-		# true if this is a real file that exists on disk
-		self.exists = exists
-		# dict of all PMX that reference this file at least once:
-		# keys are strings which are filepath relative to startpath and separator-normalized
-		# values are index it appears at, saves searching time
-		self.used_pmx = dict()
-		# set of all ways this file is used within PMXes
-		self.usage = set()
-		# total number of times this file is used... not required for the script, just interesting stats
-		self.numused = 0
-		# the name this file will be renamed to
-		self.newname = None
-
-	def __str__(self) -> str:
-		p = "'%s': used as %s, %d times among %d files" % (
-			self.name, self.usage, self.numused, len(self.used_pmx))
-		return p
-
-def walk_filetree_from_root(startpath: str) -> List[str]:
-	absolute_all_exist_files = []
-	# os.walk: returns (path to the folder i'm in),(list of folders in this folder),(list of files in this folder)
-	for where, subfolders, files in os.walk(startpath):
-		absolute_all_exist_files += [os.path.join(where, f) for f in files]
-	relative_all_exist_files = [os.path.relpath(f, startpath) for f in absolute_all_exist_files]
-	return relative_all_exist_files
 
 
 def match_folder_anylevel(s: str, matchlist: tuple, toponly=False) -> bool:

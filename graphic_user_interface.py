@@ -17,7 +17,7 @@ from mmd_scripting.scripts_for_gui import bone_add_semistandard_auto_armtwist, b
 	bone_armik_addremove, bone_endpoint_addremove, bone_add_sdef_autotwist_handtwist_adapter, check_model_compatibility, \
 	convert_vmd_to_txt, convert_vpd_to_vmd, file_sort_textures, file_translate_filenames, file_recompress_images, \
 	make_ik_from_vmd, model_overall_cleanup, model_scale, model_shift, morph_scale, morph_hide, morph_invert, \
-	translate_source_bone, vmd_armtwist_insert, vmd_rename_bones_morphs, bone_add_leg_Dbones
+	translate_source_bone, vmd_armtwist_insert, vmd_rename_bones_morphs, bone_add_leg_Dbones, rename_texture_file
 
 SCRIPTS_WHEN_FROZEN = [
 	bone_add_leg_Dbones,
@@ -39,6 +39,7 @@ SCRIPTS_WHEN_FROZEN = [
 	morph_scale,
 	morph_hide,
 	morph_invert,
+	rename_texture_file,
 	translate_source_bone,
 	vmd_armtwist_insert,
 	vmd_rename_bones_morphs]
@@ -110,7 +111,7 @@ def get_scripts_from_folder(path_to_scripts: str, existing_scripts: list):
 			core.MY_PRINT_FUNC("".join(printme_list))
 			core.MY_PRINT_FUNC("ERROR1: exception while importing script '%s' from folder '%s'\n" % (script_name, path_to_scripts))
 			continue
-	# now, iterate over all the laoded modules and validate that they define the things I need.
+	# now, iterate over all the loaded modules and validate that they define the things I need.
 	successes = 0
 	for module in script_list:
 		# validate that it has helptext

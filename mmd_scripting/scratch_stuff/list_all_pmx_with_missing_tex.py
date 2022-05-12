@@ -3,6 +3,7 @@ import os
 import mmd_scripting.core.nuthouse01_core as core
 import mmd_scripting.core.nuthouse01_io as io
 import mmd_scripting.core.nuthouse01_pmx_parser as pmxlib
+import mmd_scripting.core.tools.file_system.walk_filetree_from_root
 from mmd_scripting.scripts_for_gui import file_sort_textures
 
 _SCRIPT_VERSION = "Script version:  Nuthouse01 - v0.6.00 - 6/10/2021"
@@ -45,7 +46,7 @@ def main(moreinfo=False):
 	
 	core.MY_PRINT_FUNC("... beginning to index file tree...")
 	# 2. build list of ALL file on the system within this folder
-	relative_all_exist_files = file_sort_textures.walk_filetree_from_root(rootdir)
+	relative_all_exist_files = mmd_scripting.core.tools.file_system.walk_filetree_from_root.walk_filetree_from_root(rootdir)
 	core.MY_PRINT_FUNC("... total # of files:", len(relative_all_exist_files))
 	relative_all_pmx = [f for f in relative_all_exist_files if f.lower().endswith(".pmx")]
 	core.MY_PRINT_FUNC("... total # of PMX models:", len(relative_all_pmx))
