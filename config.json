@@ -8,9 +8,9 @@
     },
     "file_sorting": {
         "ignored_folders": {
-            "textures": ["cloth", "outfit", "uniform", "wear", "body", "tex", "weapon", "acc", "face", "tx"],
-            "toon": ["tn", "toon"],
-            "sph": ["sph", "spa", "sp"]
+            "textures": [],
+            "toon": [],
+            "sph": []
         }
     }
 }
