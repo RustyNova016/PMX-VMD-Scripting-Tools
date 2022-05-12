@@ -4,6 +4,7 @@ import shutil
 import mmd_scripting.core.nuthouse01_core as core
 import mmd_scripting.core.nuthouse01_io as io
 import mmd_scripting.core.nuthouse01_pmx_parser as pmxlib
+import mmd_scripting.core.tools.file_system.walk_filetree_from_root
 from mmd_scripting.scripts_for_gui import file_sort_textures
 
 _SCRIPT_VERSION = "Script version:  Nuthouse01 - v1.07.03 - 8/9/2021"
@@ -83,7 +84,7 @@ def main(moreinfo=False):
 	# =========================================================================================================
 	# =========================================================================================================
 	# first, build the list of ALL files that actually exist, then filter it down to neighbor PMXs and relevant files
-	relative_all_exist_files = file_sort_textures.walk_filetree_from_root(startpath)
+	relative_all_exist_files = mmd_scripting.core.tools.file_system.walk_filetree_from_root.walk_filetree_from_root(startpath)
 	core.MY_PRINT_FUNC("ALL EXISTING FILES:", len(relative_all_exist_files))
 	# now fill "neighbor_pmx" by finding files without path separator that end in PMX
 	# these are relative paths tho
